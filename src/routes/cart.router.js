@@ -10,8 +10,12 @@ const cartManager = new CartManager();
 
 
 router.post('/',async (req, res)=>{
-    await cartManager.addCart();
-    res.send({status:'success'})
+    try {
+        await cartManager.addCart();
+        res.send({status:'success'})
+    } catch (error) {
+        return res.status(500).send({status:'error', error:error.message})
+    }
 })
 
 router.get('/:id', async (req, res)=>{

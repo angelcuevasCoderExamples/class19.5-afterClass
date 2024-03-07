@@ -1,6 +1,5 @@
 const {Router} = require('express');
 const ItemsManager = require('../dao/dbManagers/ItemsManager');
-const itemModel = require('../dao/models/item');
 
 const router = Router();
 
@@ -14,14 +13,19 @@ router.get('/', async (req, res)=>{
         let {docs,...rest} = await manager.getItems(query)    
         res.send({status:'success', payload: docs, ...rest})
     } catch (error) {
-        res.status(400).send({status:'error', error: error.message })
+        res.status(500).send({status:'error', error: error.message })
     }
 
     
 })
 
 router.get('/:id', async (req, res)=>{
-    let item = await manager.getItem(req.params.id)
+
+    try {
+        let item = await manager.getItem(req.params.id)
+    } catch (error) {
+        res.status(500).send({status:'error', error: error.message })
+    }
 
     res.send({item: item})
 })
@@ -37,16 +41,26 @@ router.post('/', async (req, res)=>{
 
 router.put('/:id', async (req, res)=>{
     const id = req.params.id
-    
-    await manager.updateItem(id, req.body);
 
-    res.send({status:'success'})
+    try {
+        const result = await manager.updateItem(id, req.body);
+        
+        res.send({status:'success', details: result})
+    } catch (error) {
+        res.status(500).send({status:'error', error: error.message })
+    }
+
 })
 
 router.delete('/:id', async (req,res)=>{
     const id = req.params.id; 
-    await manager.deleteItem(id);
-    res.send({status:'success'})
+    try {
+        const result = await manager.deleteItem(id);
+        res.send({status:'success', details: result})        
+    }catch (error) {
+        res.status(500).send({status:'error', error: error.message })
+    }
+
 })
 
 
