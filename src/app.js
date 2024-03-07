@@ -77,7 +77,3 @@ app.use('/api/items', itemsRouter);
 app.use('/api/carts', cartRouter);
 app.use('/', viewsRouter)
 
-
-app.use((error, req, res, next)=>{  
-    return res.status(500).send({status:'error', error: error.message})
-})

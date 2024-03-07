@@ -9,31 +9,20 @@ const itemsManager = new ItemsManager();
 const cartManager = new CartManager();
 
 
-
-const ErrorHandler = (fn)=>async (req, res, next)=>{
-    try {
-        await fn(req, res)
-    } catch (error) {
-        next(error)
-    }
-}
-
-
-
 router.post('/',async (req, res)=>{
     await cartManager.addCart();
     res.send({status:'success'})
 })
 
-router.get('/:id',ErrorHandler(async (req, res)=>{
-    // try {
+router.get('/:id', async (req, res)=>{
+    try {
         const id = req.params.id; 
         const cart = await cartManager.getCart(id)
         res.send({status:'success', items: cart.items})
-    // } catch (error) {
-    //     return res.status(500).send({status:'error', error:error.message})
-    // }
-}))
+    } catch (error) {
+        return res.status(500).send({status:'error', error:error.message})
+    }
+})
 
 router.post('/:id/item/:iid', async (req, res)=>{
     const id = req.params.id; 
