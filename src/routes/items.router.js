@@ -7,24 +7,6 @@ const router = Router();
 const manager = new ItemsManager()
 
 
-router.get('/do', async (req, res)=>{
-    await itemModel.insertMany([
-        {description: 'Meat', category:'food', price: 30},
-        {description: 'Rise', category:'food', price: 10},
-        {description: 'Noodles', category:'food', price: 8},
-        {description: 'chicken', category:'food', price: 25},
-        {description: 'ramen', category:'food', price: 10},
-        {description: 'monitor', category:'computers', price: 40},
-        {description: 'mouse', category:'computers', price: 10},
-        {description: 'keyboars', category:'computers', price: 10},
-        {description: 'case', category:'computers', price: 13},
-        {description: 'audio interface', category:'computers', price: 18},
-        {description: 'brick', category:'construction', price: 4},
-        {description: 'cement', category:'construction', price: 13}
-    ])
-    res.send({ok:true, message:'inserted'})
-})
-
 router.get('/', async (req, res)=>{
     let query = req.query; 
 
