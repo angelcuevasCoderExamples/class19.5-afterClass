@@ -16,6 +16,9 @@ mongoose.connect(`mongodb+srv://angelpablocuevas1989:EghP7p3eTEtgWPyu@coderclust
 
 const app = express();
 
+
+
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
@@ -29,6 +32,7 @@ app.use(express.static(`${__dirname}/public`))
 
 
 const serverHttp = app.listen(port, ()=>console.log(`Server running on port ${port}`));
+
 
 
 
@@ -74,4 +78,6 @@ app.use('/api/carts', cartRouter);
 app.use('/', viewsRouter)
 
 
-
+app.use((error, req, res, next)=>{  
+    return res.status(500).send({status:'error', error: error.message})
+})

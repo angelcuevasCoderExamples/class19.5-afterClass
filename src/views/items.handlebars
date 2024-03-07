@@ -1,0 +1,28 @@
+<h1>items</h1>
+
+{{#each items}}
+<div>
+    <h3>{{this.description}}</h3>
+    <p>category: {{this.category}}</p>
+    <p>price: {{this.price}}</p>
+    <button>Add to cart</button>
+</div>
+<br><br>
+{{/each}}
+
+
+<div >
+    {{#if hasPrevPage}}
+        <a href="{{prevLink}}"><button >Prev</button></a>
+    {{else}}
+        <button disabled>Prev</button>
+    {{/if}}
+
+    {{#if hasNextPage}}
+   
+        <a href="{{nextLink}}"><button >Next</button></a>
+    </button>
+    {{else}}
+        <button class='btnPageDisabled' disabled>Next</button>
+    {{/if}}
+</div>
